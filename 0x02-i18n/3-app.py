@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Getting locale"""
+"""Get locale"""
 
 from flask import Flask, render_template, request
 from flask_babel import Babel
 
 
 class Config:
-    """Config """
+    """Config"""
 
     DEBUG = True
     LANGUAGES = ["en", "fr"]
@@ -22,7 +22,8 @@ babel = Babel(app)
 
 @babel.localeselector
 def get_locale() -> str:
-    """Getting the locale"""
+    """getting the local
+    """
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
@@ -31,6 +32,11 @@ def index() -> str:
     """index"""
     return render_template("3-index.html")
 
+# uncomment this line and comment the @babel.localeselector.
+# you get this error:
+# AttributeError: 'Babel' object has no attribute 'localeselector'
+# babel.init_app(app, locale_selector=get_locale)
+
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0', port=5000)
